@@ -1,0 +1,43 @@
+{
+  "name": "proximity",
+  "version": "1.0.0",
+  "description": "get it done",
+  "main": "index.js",
+  "scripts": {
+    "start": "node Backend/server.js",
+    "test": "test",
+    "build": "set NODE_ENV=production&&webpack",
+    "dev": "set NODE_ENV=development&&nodemon Backend/server.js webpack serve --open"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "build",
+      "client"
+    ]
+  },
+  "author": "Chance Kupersmith",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.20",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0",
+    "webpack": "^5.74.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^8.2.5",
+    "concurrently": "^7.4.0",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.0.2",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
