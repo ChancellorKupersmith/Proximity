@@ -1,2 +1,2 @@
 // Example constant
-export const ADD_CARD = 'ADD_CARD';
+export const ADD_MARKER = 'ADD_MARKER';

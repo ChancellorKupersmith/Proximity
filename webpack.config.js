@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-
 module.exports = {
     mode: process.env.NODE_ENV,
     entry: path.join(__dirname, '/Frontend/index.js'),
@@ -14,16 +13,19 @@ module.exports = {
         template: 'index.html'
       })
     ],
+    resolve: {
+      extensions: [".js"]
+    },
     devServer: {
       // TODO: Find out what purpose this option is for
-      // static: {
-      //   directory: 'index.html',
-      // },
+      static: {
+        directory: './',
+      },
       port: 8080,
       hot: true,
-      proxy: {
-        '/api': 'http://localhost:3000',
-      },
+      // proxy: {
+      //   '/api': 'http://localhost:3000',
+      // },
     },
     module: {
       rules: [
@@ -34,7 +36,10 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             // Order Matters! Loads presets from end to beginning of array
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: [
+              '@babel/preset-env',
+              ['@babel/preset-react', {"runtime": "automatic"}]
+            ]
           } 
         }
       },

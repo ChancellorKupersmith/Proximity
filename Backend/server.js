@@ -6,7 +6,7 @@ const path = require('path');
 const PORT = 3000;
 // For parsing request body stream as one js obj
 app.use(express.json());
-// TODO: Explain this in own words
+
 // statically serve everything in the build folder on the route '/build'
 app.use('/build', express.static(path.join(__dirname, '../dist/build')));
 
@@ -14,10 +14,11 @@ app.use('/build', express.static(path.join(__dirname, '../dist/build')));
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
-// Unknown route handler
+
+// Unknown route handler, if a request is sent to a url that doesn't exist this sends a 404
 app.use((req, res) => res.sendStatus(404));
 
-// Global error handler
+// Global error handler, will trigger if any errors occur when handling requests
 app.use((err, req, res, next) => {
     const defaultErr = {
       log: 'Error occured during middleware execution',
@@ -28,4 +29,5 @@ app.use((err, req, res, next) => {
     console.log(errorObj.log);
     return res.status(errorObj.status).json(errorObj.message);
 });
+// Starts server listening on port 
 app.listen(PORT, () => console.log(`Server started. Listening on PORT: ${PORT}`));
