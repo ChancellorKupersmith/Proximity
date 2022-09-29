@@ -15,23 +15,34 @@ const housesController = {};
 
 housesController.getHouses = async (req, res, next) =>{
     try{
-        const { lat, lng } = req.body;
+        console.log(req.query)
+        const { lat, lng } = req.query;
         const requestUrl = `https://api.gateway.attomdata.com/propertyapi/v1.0.0/property/snapshot?latitude=${lat}&longitude=${lng}&radius=2`;
         const response = await fetch(requestUrl, {
-            method: 'get',
+            method: 'GET',
             headers: {
                 'accept': 'application/json',
                 'APIKey': keys.ATTOM_API_KEY
             }
         });
         const resData = await response.json();
-        // parse thru properties 
+        const houses = [];
+        // parse thru properties adding to res.locals.houses obj
         for(const house of resData.property){
             console.log('\nAddress:');
             console.log(house.address);
             console.log('Location:');
             console.log(house.location);
+
+            houses.push({
+                address: house.address.oneLine,
+                location: { 
+                    lat: Number(house.location.latitude),
+                    lng: Number(house.location.longitude)
+                }
+            });
         }
+        res.locals.houses = houses;
         return next();
     }
     catch(err){

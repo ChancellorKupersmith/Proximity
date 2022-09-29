@@ -5,7 +5,11 @@ import MenuContainer from './MenuContainer.jsx';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { map: null }
+        this.state = { 
+            city: null,
+            houses: []
+         }
+        
     }
 
     render(){
@@ -13,10 +17,20 @@ class App extends Component {
             // TODO: Explain why div container is needed?
             // Place react components inside div
             <div>
-                <Map setMap={(newMap)=>{
-                    this.setState({map: newMap});
+                <Map setCityGlobal={(newCity)=>{
+                    this.setState({
+                        ...this.state,
+                        city: newCity
+                    });
+                }}
+                houses={this.state.houses}
+                />
+                <MenuContainer state={this.state} setHouses={(houses)=>{
+                    this.setState({
+                        ...this.state,
+                        houses: houses
+                    })
                 }}/>
-                <MenuContainer></MenuContainer>
             </div>
         );
     }

@@ -6,6 +6,7 @@ import menuIcon from '../assets/menu_icon.png'
 class MenuContainer extends Component {
     constructor(props) {
         super(props);
+        this.city = props.state.city;
         this.state = { 
             collapsed: true,
             tabKey: 'stay',
@@ -78,6 +79,7 @@ class MenuContainer extends Component {
         });
     }
     render() {
+        // console.log(this.props.state.city)
         return (
             <div id='menu-container' className='menu' 
                 onClick={ this.state.collapsed ? this.openCloseMenu : () => {} }
@@ -97,9 +99,9 @@ class MenuContainer extends Component {
                 >
                     <img id='delete-icon' className='icons' src={deleteIcon}/>
                 </div>
-                <StaysPage changeTab={this.changeTab} />
-                <GosPage changeTab={this.changeTab} />
-                <FavsPage changeTab={this.changeTab} />
+                <StaysPage city={this.props.state.city} changeTab={this.changeTab} setHouses={this.props.setHouses} />
+                <GosPage city={this.props.state.city} changeTab={this.changeTab} setHouses={this.props.setHouses} />
+                <FavsPage city={this.props.state.city} changeTab={this.changeTab} setHouses={this.props.setHouses} />
             </div>
         )
     }

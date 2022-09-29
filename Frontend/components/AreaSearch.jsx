@@ -1,7 +1,7 @@
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import useOnclickOutside from "react-cool-onclickoutside";
 
-const AreaSearchBar = ({ city, setCityLocation })=> {
+const AreaSearchBar = ({ city, setCityLocation, setGlobalCity })=> {
     // Use places auto complete module to give suggestions of cities from google api
     const {
         value,
@@ -33,6 +33,8 @@ const AreaSearchBar = ({ city, setCityLocation })=> {
             const { lat, lng } = await getLatLng(results[0]);
             // and update city area
             setCityLocation({ lat, lng });
+            setGlobalCity({lat, lng});
+            
         }
     // Render list elements of suggestions, when list el clicked update city value
     const renderSuggestions = () =>{

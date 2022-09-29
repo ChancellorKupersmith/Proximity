@@ -3,6 +3,7 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import keys from "../../keys"
 import mapStyles from '../Styles/mapStyles';
 import AreaSearchBar from './AreaSearch.jsx';
+import houseIcon from '../assets/house_icon.png';
 
 // initialize GoogleMap params outside of component 
 // because react state treats array literals as new objects
@@ -34,7 +35,7 @@ const Map = (props) => {
   // use callback is used so map ref is only updated if we get a new map
   const onLoad = useCallback((map) => {
     (mapRef.current = map)
-    props.setMap(mapRef.current);
+
   }, []);
 
   // Loads map from google maps api
@@ -55,6 +56,7 @@ const Map = (props) => {
           setCityLocation(position);
           mapRef.current?.panTo(position);
         }}
+        setGlobalCity={props.setCityGlobal}
       />
       <GoogleMap 
         mapContainerStyle={mapContainerStyle} 
@@ -63,6 +65,22 @@ const Map = (props) => {
         options={mapOptions}
         onLoad={onLoad}
         >
+          {props.houses.map(house => {
+            const image = {
+              url: houseIcon,
+              size: new google.maps.Size(60,60),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(0, 32)
+            }
+            return (
+                <Marker
+                  className='house-icon'
+                  key={JSON.stringify(house.address)} 
+                  position={house.location}
+                  icon='http://maps.google.com/mapfiles/ms/icons/homegardenbusiness.png'
+                />
+            );
+          })}
       </GoogleMap>
     </div>
   );

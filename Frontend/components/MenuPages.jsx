@@ -35,11 +35,33 @@ class SearchBar extends Component {
 export class StaysPage extends Component {
     constructor(props) {
         super(props);
+        this.city = props.city;
+        console.log(this.city);
         this.state = {
             stays: []
         }
+        this.getHouses;
     }
-    render (){
+
+    async getHouses(city){
+        const getHousesUrl = `http://localhost:3000/houses/?lat=${city.lat}&lng=${city.lng}`;
+        // const getHousesUrl = '/houses';
+        console.log(getHousesUrl);
+        try{
+            const res = fetch(getHousesUrl)
+            .then((res) => res.json())
+            .then((results)=>{
+                console.log(results);
+                this.props.setHouses(results);
+            }).catch((err) => console.log(err));
+            // const results = await res.json();
+            // console.log(results.length);
+        } catch(err){
+            console.log(err);
+        }
+    }
+
+    render() {
         return (
             <div id='stays-page' className='stays-page' >
                 <div className='menu-page'>
@@ -51,6 +73,7 @@ export class StaysPage extends Component {
                             });
                         }}
                     />
+                    <button id='getHouses' onClick={async ()=> await this.getHouses(this.props.city)}></button>
                 </div>
             </div>
         )
