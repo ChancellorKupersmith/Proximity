@@ -11,6 +11,7 @@ class App extends Component {
             // TODO: Explain why div container is needed?
             // Place react components inside div
             <Map />
+            
         );
     }
 }
