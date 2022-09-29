@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require("webpack");
 const path = require('path');
 module.exports = {
     mode: process.env.NODE_ENV,
@@ -11,10 +12,15 @@ module.exports = {
       new HtmlWebpackPlugin({
         title: 'Development',
         template: 'index.html'
-      })
+      }),
+      new webpack.ProvidePlugin({
+        $: require.resolve('jquery'),
+        jQuery: require.resolve('jquery')
+    }),
     ],
     resolve: {
-      extensions: [".js"]
+      extensions: [".js"],
+      modules: ['node_modules']
     },
     devServer: {
       // TODO: Find out what purpose this option is for
@@ -44,14 +50,15 @@ module.exports = {
         }
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
         use: [
-          // Creates `style` nodes from JS strings
-          "style-loader",
-          // Translates CSS into CommonJS
-          "css-loader",
-          // Compiles Sass to CSS
-          "sass-loader",
+          {
+            loader: 'file-loader',
+          },
         ],
       }
     ]

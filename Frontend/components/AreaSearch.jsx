@@ -35,20 +35,25 @@ const AreaSearchBar = ({ city, setCityLocation })=> {
             setCityLocation({ lat, lng });
         }
     // Render list elements of suggestions, when list el clicked update city value
-    const renderSuggestions = () =>
-        data.map(({place_id, description}) => {
+    const renderSuggestions = () =>{
+        // console.log(data);
+        return data.map(({place_id, description}) => {
             return (
-                <li key={place_id} onClick={onSuggestionSelect(description)}>
+                <li key={place_id} 
+                    onClick={onSuggestionSelect(description)}
+                    onKeyDown={onSuggestionSelect(description)}
+                >
                     {description}
                 </li>
             );
         });
+    }
 
 
 
 // Render Component
     return (
-        <div className="search">
+        <div id="search-container" className="search">
             <div className="search-input">
                 <input 
                     typeof="text" 

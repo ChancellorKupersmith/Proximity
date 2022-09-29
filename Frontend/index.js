@@ -1,16 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 import App from './components/App.jsx';
-import Map from './components/Map.jsx';
-import store from './store';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 render(
     // TODO: Explain why provider is needed and what React.StrictMode is doing
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+  <App />,
   document.getElementById('root')
 );

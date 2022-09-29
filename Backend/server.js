@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const housesRouter = require('./routes/houses');
+
 
 // Code convention: production port is on 3000
 const PORT = 3000;
@@ -14,6 +16,9 @@ app.use('/build', express.static(path.join(__dirname, '../dist/build')));
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
+
+app.use('/houses', housesRouter);
+
 
 // Unknown route handler, if a request is sent to a url that doesn't exist this sends a 404
 app.use((req, res) => res.sendStatus(404));

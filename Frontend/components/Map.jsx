@@ -7,8 +7,8 @@ import AreaSearchBar from './AreaSearch.jsx';
 // initialize GoogleMap params outside of component 
 // because react state treats array literals as new objects
 const mapContainerStyle = {
-  width: '98.5vw',
-  height: '98vh',
+  width: '100vw',
+  height: '100vh',
 };
 
 const initMapPosition = {
@@ -32,7 +32,10 @@ const Map = (props) => {
   // Used for referencing map later without updating state
   const mapRef = useRef();
   // use callback is used so map ref is only updated if we get a new map
-  const onLoad = useCallback((map) => (mapRef.current = map), []);
+  const onLoad = useCallback((map) => {
+    (mapRef.current = map)
+    props.setMap(mapRef.current);
+  }, []);
 
   // Loads map from google maps api
   const {isLoaded, loadError} = useLoadScript({
@@ -42,25 +45,26 @@ const Map = (props) => {
   if(loadError) return 'Error loading maps';
   if(!isLoaded) return 'Loading Maps'; 
   
-
-  return <div>
-    <h1>Proximity</h1>
-    <AreaSearchBar
-      key='area-search-bar'
-      city={city}
-      setCityLocation={ (position)=>{
-        setCityLocation(position);
-        mapRef.current?.panTo(position);
-      }}
-    />
-    <GoogleMap 
-      mapContainerStyle={mapContainerStyle} 
-      zoom={12} 
-      center={initMapPosition}
-      options={mapOptions}
-      onLoad={onLoad}
-      >
-    </GoogleMap>
-  </div>
+  
+  return (
+    <div>
+      <AreaSearchBar
+        key='area-search-bar'
+        city={city}
+        setCityLocation={ (position)=>{
+          setCityLocation(position);
+          mapRef.current?.panTo(position);
+        }}
+      />
+      <GoogleMap 
+        mapContainerStyle={mapContainerStyle} 
+        zoom={13.25} 
+        center={initMapPosition}
+        options={mapOptions}
+        onLoad={onLoad}
+        >
+      </GoogleMap>
+    </div>
+  );
 }
 export default Map;
